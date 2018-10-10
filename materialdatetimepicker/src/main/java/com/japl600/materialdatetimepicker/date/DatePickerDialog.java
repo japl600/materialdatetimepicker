@@ -101,7 +101,7 @@ public class DatePickerDialog extends DialogFragment implements
 
   private int mCurrentView = UNINITIALIZED;
 
-  private int mWeekStart = Calendar.SATURDAY;
+  private int mWeekStart = Calendar.MONDAY;
   private int mMinYear = DEFAULT_START_YEAR;
   private int mMaxYear = DEFAULT_END_YEAR;
   private Calendar mMinDate;
@@ -434,9 +434,9 @@ public class DatePickerDialog extends DialogFragment implements
 
   @SuppressWarnings("unused")
   public void setFirstDayOfWeek(int startOfWeek) {
-    if (startOfWeek < Calendar.SUNDAY || startOfWeek > Calendar.SATURDAY) {
+    if (startOfWeek < Calendar.SUNDAY || startOfWeek > Calendar.MONDAY) {
       throw new IllegalArgumentException("Value must be between Calendar.SUNDAY and " +
-        "Calendar.SATURDAY");
+        "Calendar.MONDAY");
     }
     mWeekStart = startOfWeek;
     if (mDayPickerView != null) {

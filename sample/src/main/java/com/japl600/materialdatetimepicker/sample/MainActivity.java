@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onClick(View view) {
-        String fontName = "lato_italic";
+        String fontName = "lato_regular";
         switch (view.getId()) {
             case R.id.time_button: {
                 Calendar now = Calendar.getInstance();

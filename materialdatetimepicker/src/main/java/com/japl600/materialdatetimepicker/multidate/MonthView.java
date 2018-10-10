@@ -101,7 +101,7 @@ public abstract class MonthView extends View {
   protected static int DEFAULT_HEIGHT = 32;
   protected static int MIN_HEIGHT = 10;
   protected static final int DEFAULT_SELECTED_DAY = -1;
-  protected static final int DEFAULT_WEEK_START = Calendar.SATURDAY;
+  protected static final int DEFAULT_WEEK_START = Calendar.MONDAY;
   protected static final int DEFAULT_NUM_DAYS = 7;
   protected static final int DEFAULT_SHOW_WK_NUM = 0;
   protected static final int DEFAULT_FOCUS_MONTH = -1;
@@ -372,7 +372,7 @@ public abstract class MonthView extends View {
     if (params.containsKey(VIEW_PARAMS_WEEK_START)) {
       mWeekStart = (int) params.get(VIEW_PARAMS_WEEK_START);
     } else {
-      mWeekStart = Calendar.SATURDAY;
+      mWeekStart = Calendar.MONDAY;
     }
 
     mNumCells = Utils.getDaysInMonth(mMonth, mYear);
@@ -455,10 +455,11 @@ public abstract class MonthView extends View {
   protected void drawMonthDayLabels(Canvas canvas) {
     int y = getMonthHeaderSize() - (MONTH_DAY_LABEL_TEXT_SIZE / 2);
     int dayWidthHalf = (mWidth - mEdgePadding * 2) / (mNumDays * 2);
-    float firstX = (2 * (mNumDays - 1) + 1) * dayWidthHalf + rightSpace;
+//    float firstX = (2 * (mNumDays - 1) + 1) * dayWidthHalf + rightSpace;
+    float firstX = mEdgePadding; //Quitando orden inverso de días
     for (int i = 0; i < mNumDays; i++) {
       int calendarDay = (i + mWeekStart) % mNumDays;
-      int x = (int) (firstX - (2 * i + 1) * dayWidthHalf + mEdgePadding);
+      int x = (int) (firstX + (2 * i + 1) * dayWidthHalf + mEdgePadding);
       mDayLabelCalendar.set(Calendar.DAY_OF_WEEK, calendarDay);
       String localWeekDisplayName = mDayLabelCalendar.
               getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault()); // TODO: RTLize
@@ -478,9 +479,10 @@ public abstract class MonthView extends View {
       + getMonthHeaderSize();
     final float dayWidthHalf = (mWidth - mEdgePadding * 2) / (mNumDays * 2.0f);
     int j = findDayOffset();
-    float firstX = (2 * (mNumDays - 1) + 1) * dayWidthHalf + rightSpace;
+//    float firstX = (2 * (mNumDays - 1) + 1) * dayWidthHalf + rightSpace;
+    float firstX = mEdgePadding; //Quitando orden inverso de días
     for (int dayNumber = 1; dayNumber <= mNumCells; dayNumber++) {
-      final int x = (int) (firstX - (((2 * j + 1) * dayWidthHalf + mEdgePadding)));
+      final int x = (int) (firstX + (((2 * j + 1) * dayWidthHalf + mEdgePadding)));
 
       int yRelativeToDay = (mRowHeight + MINI_DAY_NUMBER_TEXT_SIZE) / 2 - DAY_SEPARATOR_WIDTH;
 
@@ -551,8 +553,8 @@ public abstract class MonthView extends View {
     }
     // Selection is (x - start) / (pixels/day) == (x -s) * day / pixels
     int row = (int) (y - getMonthHeaderSize()) / mRowHeight;
-    int column = (int) (mNumDays - ((x - dayStart) * mNumDays) / (mWidth - dayStart - mEdgePadding));
-
+//    int column = (int) (mNumDays - ((x - dayStart) * mNumDays) / (mWidth - dayStart - mEdgePadding)); //Quitando orden inverso de días
+    int column = (int) (((x - dayStart) * mNumDays) / (mWidth - dayStart - mEdgePadding));
     int day = column - findDayOffset() + 1;
     day += row * mNumDays;
     return day;
