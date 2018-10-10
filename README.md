@@ -79,6 +79,13 @@ You can theme the pickers by overwriting the color resources `mdtp_accent_color`
 ```
 
 #Additional Options
+
+* `Typeface` custom font  
+The `TimePickerDialog` or `DatePickerDialog` allowed three fonts:
+```java
+timePickerDialog.setThemeDark("lato_regular"); //can be also lato_italic and lato_bold
+```
+
 * `TimePickerDialog` dark theme  
 The `TimePickerDialog` has a dark theme that can be set by calling
 ```java
